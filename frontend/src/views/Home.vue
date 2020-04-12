@@ -3,7 +3,7 @@
     <div class="container pt-3">
       <h1>REST API</h1>
       <form class="form-inline mb-3"
-            @submit.prevent="createContact()"
+            @submit="createContact()"
       >
         <div class="form-group mr-5">
           <label for="name" class="mr-3">Имя</label>
@@ -55,7 +55,6 @@ import LoaderTemplate from '../components/LoaderTemplate.vue';
 
 export default {
   name: 'Home',
-  props: ['contacts', 'isLoader'],
   data() {
     return {
       form: {
@@ -63,6 +62,8 @@ export default {
         value: '',
         marked: false,
       },
+      contacts: [],
+      isLoader: false,
     };
   },
   components: {
@@ -113,6 +114,18 @@ export default {
         });
       contact.marked = true;
     },
+  },
+  beforeMount() {
+    this.isLoader = true;
+    contactApi.getAllContacts()
+      .then((response) => {
+        console.log('response', response.data);
+        this.contacts = response.data;
+        this.isLoader = false;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 };
 </script>

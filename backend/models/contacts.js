@@ -4,7 +4,7 @@ const CONTACTS = [
     {
         id: Date.now(),
         name: 'wertey',
-        value: '+375445920125',
+        value: '+342342342342',
         marked: false,
     }
 ];
