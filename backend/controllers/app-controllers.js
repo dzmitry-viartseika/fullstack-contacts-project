@@ -3,6 +3,7 @@ const CONTACTS = require('../models/contacts');
 class AppController {
     constructor(){}
     getContacts = async (req, res) => {
+        console.log('getContacts', CONTACTS);
         res.json(CONTACTS)
     }
     addNewContact = async (req, res) => {
@@ -26,6 +27,8 @@ class AppController {
     changeMark = async (req, res) => {
         const idx = CONTACTS.findIndex((item) => item.id === req.params.id);
         CONTACTS[idx] = req.body;
+        console.log('CONTACTS[idx]', CONTACTS[idx]);
+        console.log('CONTACTS', CONTACTS);
         res.json(CONTACTS[idx]);
     }
 }
