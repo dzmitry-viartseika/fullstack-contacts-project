@@ -55,6 +55,7 @@ import LoaderTemplate from '../components/LoaderTemplate.vue';
 
 export default {
   name: 'Home',
+  props: ['contacts', 'isLoader'],
   data() {
     return {
       form: {
@@ -62,8 +63,6 @@ export default {
         value: '',
         marked: false,
       },
-      contacts: [],
-      isLoader: false,
     };
   },
   components: {
@@ -101,11 +100,9 @@ export default {
         });
     },
     async markContact(id) {
-      const contact = this.contacts.find((item) => item.id === id);
-      await contactApi.changeMark(id, {
-        ...contact,
-        marked: true,
-      })
+      let contact = this.contacts.find((item) => item.id === id);
+      contact = { ...contact, marked: true };
+      await contactApi.changeMark(id, contact)
         .then((res) => {
           // eslint-disable-next-line no-console
           console.log(res);
@@ -116,15 +113,6 @@ export default {
         });
       contact.marked = true;
     },
-  },
-  async mounted() {
-    this.isLoader = true;
-    await contactApi.getAllContacts()
-      .then((response) => {
-        console.log('response', response.data);
-        this.contacts = response.data;
-        this.isLoader = false;
-      });
   },
 };
 </script>

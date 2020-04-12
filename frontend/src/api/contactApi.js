@@ -22,7 +22,6 @@ export default {
     return instWithCred.delete(`contacts/${id}`);
   },
   changeMark(id, contact) {
-    console.log('contact', contact);
     const instWithCred = axios.create({
       baseURL: domains.CONTACTS,
     });

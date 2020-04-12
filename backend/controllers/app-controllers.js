@@ -8,7 +8,7 @@ class AppController {
     }
     addNewContact = async (req, res) => {
         const item = {
-            id: CONTACTS.length + 1,
+            id: Date.now(),
             name: req.body.form.name,
             value: req.body.form.value,
             marked: false,
@@ -25,10 +25,12 @@ class AppController {
         res.status(201).json({message: 'Contact was deleted'})
     }
     changeMark = async (req, res) => {
-        const idx = CONTACTS.findIndex((item) => item.id === req.params.id);
-        CONTACTS[idx] = req.body;
-        console.log('CONTACTS[idx]', CONTACTS[idx]);
-        console.log('CONTACTS', CONTACTS);
+        console.log('req', req.body.contact);
+        const idx = CONTACTS.findIndex((item) => {
+            return item.id === parseInt(req.params.id)
+        });
+        console.log('idx', idx);
+        CONTACTS[idx] = req.body.contact;
         res.json(CONTACTS[idx]);
     }
 }

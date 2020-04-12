@@ -1,12 +1,45 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
+      <Home :contacts="contacts"
+            :isLoader="isLoader"
+      />
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import Home from './views/Home.vue';
+import contactApi from './api/contactApi';
+
+export default {
+  name: 'App',
+  components: {
+    Home,
+  },
+  data() {
+    return {
+      contacts: [],
+      isLoader: false,
+    };
+  },
+  beforeMount() {
+    console.log('test', this.test);
+    this.isLoader = true;
+    contactApi.getAllContacts()
+      .then((response) => {
+        console.log('response', response.data);
+        this.contacts = response.data;
+        this.isLoader = false;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
+};
+</script>
 
 <style lang="scss">
   @import "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css";
